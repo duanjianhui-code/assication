@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="content-type" charset="UTF-8" content="text/html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    @import url("https://fonts.googleapis.com/css?family=Russo+One&display=swap");
+    @import url("https://fonts.googleapis.com/css?family=Caveat&display=swap");
+
+    html,
+    body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        position: relative;
+    }
+
+    body {
+        position: relative;
+        background-color: #232A39;
+        box-sizing: border-box;
+        border-top: solid 30px #658E9C;
+        border-bottom: solid 30px #658E9C;
+        overflow: hidden;
+    }
+
+    body h1 {
+        font-size: 30px;
+        margin-top: 50px;
+        text-align: center;
+    }
+
+    body #rabbit {
+        position: relative;
+        height: 400px;
+        width: 300px;
+        margin: 0 auto;
+    }
+
+    body #rabbit .yum {
+        font-size: 10px;
+        position: absolute;
+        left: 38%;
+        top: 60px;
+        transform: rotate(-20deg) translate(50%, 50%);
+        animation: sound 5s ease infinite normal forwards;
+    }
+
+    body .face {
+        position: absolute;
+        top: 45%;
+        left: 40%;
+        width: 100px;
+        height: 100px;
+        background: #fff;
+        border-radius: 50px 50px 50px 50px/50px 50px 40px 40px;
+        transform: translateY(-50%);
+        transform: translateX(-50%);
+        margin: 0 auto;
+        margin-top: 50px;
+    }
+
+    body .face .eye {
+        background: #000;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        position: absolute;
+        top: 25%;
+        left: 50%;
+        transform: translateY(-50%);
+        transform: translateX(-50%);
+        z-index: 1;
+        animation: blink 5s ease 0 infinite;
+    }
+
+    body .face .eye-left {
+        left: 28%;
+    }
+
+    body .face .eye-right {
+        left: 72%;
+    }
+
+    body .face .nose {
+        width: 10px;
+        height: 5px;
+        background: pink;
+        border-radius: 0 0 50% 50%/0 0 70% 70%;
+        position: absolute;
+        top: 68%;
+        left: 50%;
+        transform: translateY(-50%);
+        transform: translateX(-50%);
+    }
+
+    body .face .nose:before,
+    body .face .nose:after {
+        content: "";
+        display: block;
+        background: #fff;
+        width: 45px;
+        height: 40px;
+        position: absolute;
+        transform: translateY(-50%);
+        transform: translateX(-50%);
+        border-radius: 50%;
+        top: -170%;
+    }
+
+    body .face .nose:before {
+        left: -250%;
+        animation: fill-left 1s ease 0 infinite;
+    }
+
+    body .face .nose:after {
+        left: 350%;
+        animation: fill-right 1s ease 0 infinite;
+    }
+
+    body .face:after {
+        content: "";
+        display: block;
+        position: absolute;
+        top: 95%;
+        width: 100px;
+        height: 100px;
+        background: #fff;
+        border-radius: 30px 30px 50px 50px/50px 50px 30px 30px;
+    }
+
+    body .mouse {
+        border-top: solid 1px lightgray;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        position: absolute;
+        transform: translateY(-50%);
+        transform: translateX(-50%);
+        top: 83%;
+        left: 50%;
+        animation: chew 0.4s ease 0 infinite;
+    }
+
+    @keyframes blink {
+        0% {
+            height: 30px;
+        }
+
+        96% {
+            height: 30px;
+            top: 25%;
+        }
+
+        100% {
+            height: 3px;
+            top: 35%;
+        }
+    }
+
+    @keyframes chew {
+        0% {
+            border: solid 1px lightgray;
+        }
+
+        100% {
+            border: solid 3px lightgray;
+        }
+    }
+
+    @keyframes fill-left {
+        50% {
+            transform: scale(1.1) translate(-50%, 0%);
+        }
+    }
+
+    @keyframes fill-right {
+        50% {
+            transform: scale(1.1) translate(-40%, 0%);
+        }
+    }
+
+    @keyframes sound {
+        0% {
+            opacity: 0;
+            left: 10%;
+            top: 150px;
+            transform: rotate(-20deg) translate(50%, 50%);
+        }
+
+        1% {
+            opacity: 1;
+            left: 10%;
+            top: 150px;
+            transform: rotate(-20deg) translate(50%, 50%);
+        }
+
+        15% {
+            opacity: 1;
+            left: 10%;
+            top: 150px;
+            transform: rotate(-20deg) translate(50%, 50%);
+        }
+
+        16% {
+            opacity: 0;
+            left: 10%;
+            top: 150px;
+            transform: rotate(-20deg) translate(50%, 50%);
+        }
+
+        25% {
+            opacity: 0;
+            left: 70%;
+            top: 150px;
+            transform: rotate(-20deg) translate(50%, 50%);
+            transform: rotate(15deg);
+        }
+
+        26% {
+            opacity: 1;
+            left: 70%;
+            top: 150px;
+            transform: rotate(-20deg) translate(50%, 50%);
+            transform: rotate(15deg);
+        }
+
+        40% {
+            opacity: 1;
+            left: 70%;
+            top: 150px;
+            transform: rotate(-20deg) translate(50%, 50%);
+            transform: rotate(15deg);
+        }
+
+        41% {
+            opacity: 0;
+            left: 70%;
+            top: 60px;
+            transform: rotate(-20deg) translate(50%, 50%);
+            transform: rotate(15deg);
+        }
+
+        51% {
+            opacity: 0;
+            left: 10%;
+            top: 250px;
+            transform: rotate(-20deg) translate(50%, 50%);
+        }
+
+        52% {
+            opacity: 1;
+            left: 10%;
+            top: 250px;
+            transform: rotate(-20deg) translate(50%, 50%);
+        }
+
+        67% {
+            opacity: 1;
+            left: 10%;
+            top: 250px;
+            transform: rotate(-20deg) translate(50%, 50%);
+        }
+
+        68% {
+            opacity: 0;
+            left: 10%;
+            top: 250px;
+            transform: rotate(-20deg) translate(50%, 50%);
+        }
+
+        78% {
+            opacity: 0;
+            left: 65%;
+            top: 250px;
+            transform: rotate(20deg) translate(50%, 50%);
+        }
+
+        79% {
+            opacity: 1;
+            left: 65%;
+            top: 250px;
+            transform: rotate(20deg) translate(50%, 50%);
+        }
+
+        94% {
+            opacity: 1;
+            left: 65%;
+            top: 250px;
+            transform: rotate(20deg) translate(50%, 50%);
+        }
+
+        95% {
+            opacity: 0;
+            left: 65%;
+            top: 250px;
+            transform: rotate(20deg) translate(50%, 50%);
+        }
+
+        100% {
+            opacity: 0;
+            left: 10%;
+            top: 150px;
+            transform: rotate(20deg) translate(50%, 50%);
+        }
+    }
+
+    .Top {
+        position: absolute;
+        height: 300px;
+        width: 300px;
+        background-color: #F7D07B;
+        color: #507EA8;
+        border-radius: 30px 30px 225px 30px;
+        margin-top: -100px;
+        margin-left: -75px;
+        font-family: "Russo One", sans-serif;
+    }
+
+    .Top h3 {
+        margin-left: 100px;
+        margin-top: 100px;
+        font-size: 25px;
+        width: 100px;
+        line-height: 60px;
+    }
+
+    .Top h3 span {
+        font-size: 50px;
+    }
+
+    .screen {
+        width: 100%;
+        height: 100%;
+        left: 100%;
+    }
+
+    .namecard {
+        position: fixed;
+        width: 300px;
+        height: 200px;
+        left: 50%;
+        top: 50%;
+        padding: 0px 20px 30px 20px;
+        overflow: hidden;
+        background-color: #F7D488;
+        color: #4F687A;
+        border: solid 1px rgba(0, 0, 0, 0.15);
+        box-shadow: 20px 25px 15px -15px rgba(0, 0, 0, 0.25);
+        border-radius: 10px;
+        font-family: 微軟正黑體;
+        transition: 0.5s;
+    }
+
+    .namecard hr {
+        border-color: #fff;
+        margin-top: -15px;
+        margin-bottom: 20px;
+    }
+
+    .namecard h2 {
+        font-size: 25px;
+    }
+
+    .namecard span {
+        font-size: 18px;
+    }
+
+    .namecard h5 {
+        font-size: 16px;
+        font-weight: 400px;
+    }
+
+    .namecard:hover {
+        transform: translate(-50px, -50px);
+        box-shadow: -20px -25px 15px -15px rgba(0, 0, 0, 0.5);
+    }
+
+    .allstars {
+        width: 100%;
+        height: 100%;
+        border-radius: 0px;
+        z-index: -3;
+        position: absolute;
+        left: 0;
+        top: 0;
+        background-color: #333;
+    }
+
+    .allstars {
+        position: relative;
+        width: 100%;
+        height: 100%;
+    }
+
+    @keyframes falling {
+
+        0%,
+        100% {
+            opacity: 0;
+        }
+
+        30% {
+            opacity: 1;
+        }
+
+        0% {
+            transform: translate(0, 0);
+        }
+
+        100% {
+            transform: translate(-400px, 800px);
+        }
+    }
+
+    [class^=star] {
+        position: absolute;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background-color: white;
+        box-shadow: 0 0 10px 4px rgba(255, 255, 255, 0.2), 0 0 10px 8px rgba(255, 255, 255, 0.2);
+        animation: falling 5s infinite;
+    }
+
+    [class^=star]::after {
+        content: "";
+        top: 50%;
+        left: calc(50% - 2px);
+        position: absolute;
+        width: 4px;
+        height: 400px;
+        background-image: linear-gradient(white 5%, transparent);
+        transform: rotate(-135deg);
+        transform-origin: 50% 0%;
+    }
+
+    .star1 {
+        top: 11%;
+        left: 36%;
+        animation-delay: -0.2s;
+    }
+
+    .star2 {
+        top: 47%;
+        left: 44%;
+        animation-delay: -0.4s;
+    }
+
+    .star3 {
+        top: 2%;
+        left: 63%;
+        animation-delay: -0.6s;
+    }
+
+    .star4 {
+        top: -10%;
+        left: 44%;
+        animation-delay: -0.8s;
+    }
+
+    .star5 {
+        top: -12%;
+        left: 100%;
+        animation-delay: -1s;
+    }
+
+    .star6 {
+        top: -145%;
+        left: 20%;
+        animation-delay: -1.2s;
+    }
+
+    .star7 {
+        top: 20%;
+        left: 77%;
+        animation-delay: -1.4s;
+    }
+
+    .star8 {
+        top: -110%;
+        left: 68%;
+        animation-delay: -1.6s;
+    }
+
+    .star9 {
+        top: 47%;
+        left: 9%;
+        animation-delay: -1.8s;
+    }
+
+    .star10 {
+        top: -150%;
+        left: 33%;
+        animation-delay: -2s;
+    }
+
+    .star11 {
+        top: -19%;
+        left: 99%;
+        animation-delay: -2.2s;
+    }
+
+    .star12 {
+        top: 12%;
+        left: 35%;
+        animation-delay: -2.4s;
+    }
+
+    .star13 {
+        top: -19%;
+        left: 30%;
+        animation-delay: -2.6s;
+    }
+
+    .star14 {
+        top: -133%;
+        left: 14%;
+        animation-delay: -2.8s;
+    }
+
+    .star15 {
+        top: -30%;
+        left: 51%;
+        animation-delay: -3s;
+    }
+
+    .star16 {
+        top: 6%;
+        left: 69%;
+        animation-delay: -3.2s;
+    }
+
+    .star17 {
+        top: -39%;
+        left: 7%;
+        animation-delay: -3.4s;
+    }
+
+    .star18 {
+        top: 46%;
+        left: 76%;
+        animation-delay: -3.6s;
+    }
+
+    .star19 {
+        top: -126%;
+        left: 95%;
+        animation-delay: -3.8s;
+    }
+
+    .star20 {
+        top: -9%;
+        left: 87%;
+        animation-delay: -4s;
+    }
+
+    .star21 {
+        top: 40%;
+        left: 72%;
+        animation-delay: -4.2s;
+    }
+
+    .star22 {
+        top: -109%;
+        left: 70%;
+        animation-delay: -4.4s;
+    }
+
+    .star23 {
+        top: -101%;
+        left: 9%;
+        animation-delay: -4.6s;
+    }
+
+    .star24 {
+        top: -66%;
+        left: 45%;
+        animation-delay: -4.8s;
+    }
+
+    .star25 {
+        top: -124%;
+        left: 81%;
+        animation-delay: -5s;
+    }
+
+    .star26 {
+        top: -29%;
+        left: 45%;
+        animation-delay: -5.2s;
+    }
+
+    .star27 {
+        top: -71%;
+        left: 50%;
+        animation-delay: -5.4s;
+    }
+
+    .star28 {
+        top: -130%;
+        left: 1%;
+        animation-delay: -5.6s;
+    }
+
+    .star29 {
+        top: -94%;
+        left: 31%;
+        animation-delay: -5.8s;
+    }
+
+    .star30 {
+        top: 10%;
+        left: 65%;
+        animation-delay: -6s;
+    }
+
+    .star31 {
+        top: 47%;
+        left: 10%;
+        animation-delay: -6.2s;
+    }
+
+    .star32 {
+        top: -97%;
+        left: 36%;
+        animation-delay: -6.4s;
+    }
+
+    .star33 {
+        top: -127%;
+        left: 34%;
+        animation-delay: -6.6s;
+    }
+
+    .star34 {
+        top: -68%;
+        left: 8%;
+        animation-delay: -6.8s;
+    }
+
+    .star35 {
+        top: -60%;
+        left: 64%;
+        animation-delay: -7s;
+    }
+
+    .star36 {
+        top: -70%;
+        left: 59%;
+        animation-delay: -7.2s;
+    }
+
+    .star37 {
+        top: -32%;
+        left: 67%;
+        animation-delay: -7.4s;
+    }
+
+    .star38 {
+        top: -145%;
+        left: 17%;
+        animation-delay: -7.6s;
+    }
+
+    .star39 {
+        top: -96%;
+        left: 16%;
+        animation-delay: -7.8s;
+    }
+
+    .star40 {
+        top: -118%;
+        left: 37%;
+        animation-delay: -8s;
+    }
+
+    .star41 {
+        top: 31%;
+        left: 37%;
+        animation-delay: -8.2s;
+    }
+
+    .star42 {
+        top: -74%;
+        left: 75%;
+        animation-delay: -8.4s;
+    }
+
+    .star43 {
+        top: -132%;
+        left: 5%;
+        animation-delay: -8.6s;
+    }
+
+    .star44 {
+        top: 40%;
+        left: 81%;
+        animation-delay: -8.8s;
+    }
+
+    .star45 {
+        top: -35%;
+        left: 59%;
+        animation-delay: -9s;
+    }
+
+    .star46 {
+        top: -136%;
+        left: 48%;
+        animation-delay: -9.2s;
+    }
+
+    .star47 {
+        top: -73%;
+        left: 48%;
+        animation-delay: -9.4s;
+    }
+
+    .star48 {
+        top: -6%;
+        left: 41%;
+        animation-delay: -9.6s;
+    }
+
+    .star49 {
+        top: -135%;
+        left: 97%;
+        animation-delay: -9.8s;
+    }
+
+    .star50 {
+        top: -142%;
+        left: 79%;
+        animation-delay: -10s;
+    }
+
+    .star51 {
+        top: -134%;
+        left: 54%;
+        animation-delay: -10.2s;
+    }
+
+    .star52 {
+        top: 4%;
+        left: 41%;
+        animation-delay: -10.4s;
+    }
+
+    .star53 {
+        top: -83%;
+        left: 98%;
+        animation-delay: -10.6s;
+    }
+
+    .star54 {
+        top: -128%;
+        left: 33%;
+        animation-delay: -10.8s;
+    }
+
+    .star55 {
+        top: -66%;
+        left: 57%;
+        animation-delay: -11s;
+    }
+
+    .star56 {
+        top: -106%;
+        left: 73%;
+        animation-delay: -11.2s;
+    }
+
+    .star57 {
+        top: -136%;
+        left: 88%;
+        animation-delay: -11.4s;
+    }
+
+    .star58 {
+        top: -66%;
+        left: 91%;
+        animation-delay: -11.6s;
+    }
+
+    .star59 {
+        top: -133%;
+        left: 82%;
+        animation-delay: -11.8s;
+    }
+
+    .star60 {
+        top: 1%;
+        left: 21%;
+        animation-delay: -12s;
+    }
+
+    .allstars {
+        animation: back 8s infinite;
+    }
+
+    @keyframes title {
+        0% {
+            margin-top: -200px;
+            margin-left: -300px;
+        }
+
+        50% {
+            margin-top: -75px;
+            margin-left: -50px;
+        }
+
+        100% {
+            margin-top: -100px;
+            margin-left: -75px;
+        }
+    }
+
+    .Top {
+        animation-name: title;
+        animation-duration: 1.5s;
+    }
+</style>
+
+<body>
+    <div class="Top">
+        <h3>Welcome here<span></span></h3>
+    </div>
+    <div class="screen">
+        <div class="Center"></div>
+        <div class="namecard">
+            <h2>社团管理系统<span></span></h2>
+            <h5>湖南信息学院 &nbsp;电子信息学院</h5>
+            <hr noshade="noshade" />
+            <p>期末作品</p>
+        </div>
+    </div>
+    <div class="allstars">
+        <div class="star1"></div>
+        <div class="star2"></div>
+        <div class="star3"></div>
+        <div class="star4"></div>
+        <div class="star5"></div>
+        <div class="star6"></div>
+        <div class="star7"></div>
+        <div class="star8"></div>
+        <div class="star9"></div>
+        <div class="star10"></div>
+        <div class="star11"></div>
+        <div class="star12"></div>
+        <div class="star13"></div>
+        <div class="star14"></div>
+        <div class="star15"></div>
+        <div class="star16"></div>
+        <div class="star17"></div>
+        <div class="star18"></div>
+        <div class="star19"></div>
+        <div class="star20"></div>
+    </div>
+    <h1>Rabbit</h1>
+    <div class="rabbit">
+        <div class="yum"></div>
+        <div class="face">
+            <div class="eye">
+                <div class="eye-left"></div>
+                <div class="eye-right"></div>
+            </div>
+            <div class="nose"></div>
+            <div class="mouse"></div>
+        </div>
+    </div>
+</body>
+
+</html>

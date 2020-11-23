@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>设置我的资料</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="/static/layuiadmin/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="/static/layuiadmin/style/admin.css" media="all">
+    <script src="webjars/jquery/3.3.1/jquery.js"></script>
+</head>
+<body>
+<div class="layui-fluid">
+    <div class="layui-col-sm12">
+        <div class="layui-card">
+            <div class="layui-card-body">
+                <form class="layui-form" action="" method="post">
+                    <br>
+                    <div class="layui-tab layui-tab-brief">
+                        <ul class="layui-tab-title">
+                            <li class="layui-this">邮件编籍</li>
+                        </ul>
+                        <div class="layui-tab-content"></div>
+                    </div>
+                    <div class="layui-form-item">
+                        <div class="layui-inline">
+                            <label class="layui-form-label">发送的邮箱</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="targetEmail" lay-verify="required|number" autocomplete="off"
+                                       class="layui-input targetEmail" id="targetEmail">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">主题</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="title" lay-verify="identity" placeholder="" autocomplete="off"
+                                   class="layui-input" id="title">
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item layui-form-text">
+                        <label class="layui-form-label">内容</label>
+                        <div class="layui-input-block">
+                            <textarea placeholder="请输入内容" class="layui-textarea context" name="context" id="context"></textarea>
+                        </div>
+                    </div>
+                    <div class="layui-upload">
+                        <div class="layui-form-item layui-form-text">
+                            <label class="layui-form-label">附件</label>
+                            <div class="layui-input-block">
+                                <button type="button" class="layui-btn layui-btn-normal" id="testList" onclick="select()" >选择附件</button>
+                            </div>
+                        </div>
+
+
+                        <div class="layui-upload-list">
+                            <table class="layui-table">
+                                <thead>
+                                <tr>
+                                    <th>文件名</th>
+                                    <th>大小</th>
+                                    <th>状态</th>
+                                    <th>图片预览</th>
+                                    <th>操作</th>
+                                </tr>
+                                </thead>
+                                <tbody id="demoList"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!--<div class="layui-form-item layui-form-text">
+                      <label class="layui-form-label">编辑器</label>
+                      <div class="layui-input-block">
+                        <textarea class="layui-textarea layui-hide" name="content" lay-verify="content" id="LAY_demo_editor"></textarea>
+                      </div>
+                    </div>-->
+                    <div class="layui-form-item">
+                        <div class="layui-input-block">
+                            <button type="button" class="layui-btn layui-btn-normal sendemail"  lay-filter="demo1"
+                                    onclick="sendemail()" >发送
+                            </button>
+                            <button type="button" class="layui-btn layui-btn-normal" lay-filter="demo1"
+                                    id="testListAction" style="display: none">发送（附件）
+                            </button>
+                            <button type="reset" class="layui-btn layui-btn-primary" id="emailreset">重置</button>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/static/layuiadmin/layui/layui.js"></script>
+<script>
+    layui.use('upload', function () {
+        var $ = layui.jquery
+            , upload = layui.upload;
+        var targetEmail = $("#targetEmail").val();
+        var title = $("#title").val();
+        var context = $("#context").val();
+        var resret = $("#emailreset");
+        var demoListView = $('#demoList')
+            , uploadListIns = upload.render({
+            elem: '#testList'
+            , url: '/sendemail' //改成您自己的上传接口
+            , accept: 'file'
+            , multiple: true
+            , auto: false
+            , data: {
+                'targetEmail': function(){
+                    return $("#targetEmail").val();
+                },
+                'title': function () {
+                    return $("#title").val();
+                },
+                'context': function () {
+                    return $("#context").val();
+                }
+            }
+            , method: 'post'
+            , bindAction: '#testListAction'
+            , size: 0
+            , choose: function (obj) {
+                var files = this.files = obj.pushFile(); //将每次选择的文件追加到文件队列
+                //读取本地文件
+                obj.preview(function (index, file, result) {
+                    var tr = $(['<tr id="upload-' + index + '">'
+                        , '<td>' + file.name + '</td>'
+                        , '<td>' + (file.size / 1024).toFixed(1) + 'kb</td>'
+                        , '<td>等待发送</td>'
+                        ,'<td>'
+                        ,'<img src="'+ result +'" alt="'+ file.name +'" class="layui-upload-img">'
+                        ,'</td>'
+                        , '<td>'
+                        , '<button class="layui-btn layui-btn-xs demo-reload layui-hide">重传</button>'
+                        , '<button class="layui-btn layui-btn-xs layui-btn-danger demo-delete">删除</button>'
+                        , '</td>'
+                        , '</tr>'].join(''));
+
+//单个重传
+                    tr.find('.demo-reload').on('click', function () {
+                        obj.upload(index, file);
+                    });
+
+//删除
+                    tr.find('.demo-delete').on('click', function () {
+                        delete files[index]; //删除对应的文件
+                        tr.remove();
+                        uploadListIns.config.elem.next()[0].value = ''; //清空 input file 值，以免删除后出现同名文件不可选
+                    });
+
+                    demoListView.append(tr);
+                });
+            }
+            , done: function (res, index, upload) {
+                if (res.code == 1) { //上传成功
+                    var tr = demoListView.find('tr#upload-' + index)
+                        , tds = tr.children();
+                    resret.click();
+                    $("#testListAction").css({'display': 'none'});
+                    $(".sendemail").css({'display':''});
+                    $(".sendemail").attr('onclick','sendemail()');
+                    tds.eq(2).html('<span style="color: #5FB878;">发送成功</span>');
+                    tds.eq(3).html(''); //清空操作
+                    setTimeout( function(){
+                    tr.remove();
+                    }, 2* 1000 );
+                    return delete this.files[index]; //删除文件队列已经上传成功的文件
+                }
+                this.error(index, upload);
+            }
+            , error: function (index, upload) {
+                var tr = demoListView.find('tr#upload-' + index)
+                    , tds = tr.children();
+                tds.eq(2).html('<span style="color: #FF5722;">发送失败</span>');
+                tds.eq(3).find('.demo-reload').removeClass('layui-hide'); //显示重传
+            }
+        });
+    });
+
+    function sendemail() {
+        var targetEmail = $("#targetEmail").val();
+        var title = $("#title").val();
+        var context = $("#context").val();
+        var resret = $("#emailreset");
+        $.ajax({
+            url: 'sendemail',
+            type: 'POST', //GET
+            async: true,    //或false,是否异步
+            timeout: 5000,    //超时时间
+            dataType: 'json', //返回的数据格式：json/xml/html/script/jsonp/text
+            data: {
+                'targetEmail': targetEmail,
+                'title': title,
+                'context': context
+            },
+            success: function (data) {
+                if (data.i = 1) {
+                    alert('发送成功');
+                    resret.click();
+                }
+            }, error: function () {
+                alert("网络连接异常...");
+            }
+        });
+    };
+
+    function select() {
+        $("#testListAction").css({'display': ''});
+        $(".sendemail").css({'display':'none'});
+    }
+</script>
+</body>
+</html>

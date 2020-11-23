@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <style type='text/css'>body, td {
+        font-family: verdana;
+        font-size: 15px;
+        line-height: 225%;
+    }
+
+    table {
+        width: 100%;
+        background-color: #ccc;
+        margin: 5px 0;
+    }
+
+    td {
+        background-color: #fff;
+        padding: 3px;
+        padding-left: 10px;
+    }
+
+    tr td, th {
+
+        border: 0px solid red;
+
+    }
+
+    thead td {
+        text-align: center;
+        font-weight: bold;
+        background-color: #eee;
+    }
+
+    a:link, a:visited, a:active {
+        color: #015FB6;
+        text-decoration: none;
+    }
+
+    a:hover {
+        color: #E33E06;
+    }</style>
+    <meta charset="utf-8">
+    <title>查询资料</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="/static/layuiadmin/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="/static/layuiadmin/style/admin.css" media="all">
+    <script src="webjars/jquery/3.3.1/jquery.js"></script>
+</head>
+<body>
+<div class="layui-fluid">
+    <div class="layui-col-sm12">
+        <div class="layui-card">
+            <div class="layui-card-body">
+                <form class="layui-form" action="/selecteMemberById" method="post">
+                    <div class="demoTable">
+                        搜索ID：
+                        <div class="layui-inline">
+                            <input class="layui-input" name="m_id" id="demoReload" autocomplete="off">
+                        </div>
+                        <button class="layui-btn" th:data-method="edit" >搜索</button>
+                    </div>
+                </form>
+                <br>
+                <table cellspacing='1' cellpadding='0'>
+                    <thead>
+                    <tr>
+                        <td>成员ID</td>
+                        <td>成员姓名</td>
+                        <td>成员性别</td>
+                        <td>电话</td>
+                        <td>邮箱</td>
+                        <td>年龄</td>
+                        <td>操作</td>
+                    </tr>
+                    </thead>
+                    <tr th:each="member:${members}">
+                        <span th:if="${member!=null}">
+                        <td style='text-align:center;' th:text="${member!=null}?${member.m_id}" class="m_id"
+                            th:value="${member!=null}?${member.m_id}"></td>
+                        <td align='center' th:text="${member!=null}?${member.m_name}"></td>
+                        <td align='center' th:text="${member!=null}?${member.m_sex}"></td>
+                        <td align='center' th:text="${member!=null}?${member.m_phone}"></td>
+                        <td align='center' th:text="${member!=null}?${member.m_email}"></td>
+                        <td align='center' th:text="${member!=null}?${member.m_age}"></td>
+                        <td align='center'>
+                            <a class="layui-btn layui-btn-xs edit" th:value="${member!=null}?${member.m_id}">编辑</a>
+                            <a class="layui-btn layui-btn-danger layui-btn-xs del"
+                               th:value="${member!=null}?${member.m_id}">删除</a>
+                        </td>
+</span>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/static/layuiadmin/layui/layui.js"></script>
+<script>
+
+    layui.use(['element', 'jquery', 'layer'], function () {
+        var $ = layui.jquery, layer = layui.layer;
+
+        $(".edit").click(function () {
+            var m_id = $(this).attr('value');
+            layer.open({
+                type: 2,
+                title: ['修改信息', 'font-size:18px;'],
+                content: '/selecteMemberById/' + m_id,
+                area: ['700px', '600px'],
+                resize: false,
+                btn: ['确定', '取消']
+                , yes: function (index, layero) {
+                    //点击确认触发 iframe 内容中的按钮提交
+                    var body = layer.getChildFrame('body', index);
+                    body.find('#layuiadmin-app-form-submit').click();
+                    layer.close(index); // 关闭弹出层
+                },
+                btn2: function (index, layero) { // 取消按钮回调函数
+                    layer.close(index); // 关闭弹出层
+                },
+                end: function () {
+                    // $(".layui-laypage-btn").click();//弹出框  关闭后刷新，停留在当前页
+                    location.reload();
+                }
+            });
+        });
+
+        $(".del").click(function () {
+            var m_id = $(this).attr('value');
+
+            layer.confirm('您确定要删除吗？', {
+                btn: ['Yes', 'No'], //按钮
+                yes: function (index, layero) {
+                    $.ajax({
+                        url: '/deleteMemberById/' + m_id,
+                        type: 'GET', //GET
+                        async: true,    //或false,是否异步
+                        timeout: 5000,    //超时时间
+                        dataType: 'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+                        success: function (data) {
+                        }
+                    });
+                    layer.close(index);
+
+                }, end: function () {
+
+                    // $(".layui-laypage-btn").click();//弹出框  关闭后刷新，停留在当前页
+                    location.reload();
+
+                }
+            });
+        });
+    });
+</script>
+
+</body>
+</html>

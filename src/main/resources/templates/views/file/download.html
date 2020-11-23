@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>下载文件</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="/static/layuiadmin/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="/static/layuiadmin/style/admin.css" media="all">
+    <script src="webjars/jquery/3.3.1/jquery.js"></script>
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/static/css/bootstrap-theme.min.css"/>
+
+</head>
+<body>
+<div class="layui-fluid">
+    <div class="layui-col-sm12">
+        <div class="layui-card">
+            <div class="layui-card-body">
+                <ul class="layui-nav ">
+                    <li class="layui-nav-item">文件列表</li>
+                </ul>
+                <div class="container">
+                    <div class="panel-body">
+                        <div class="table table-responsive">
+                            <table class="table table-bordered table-hover">
+                                <tbody class="text-center">
+                                <tr>
+                                    <td>
+                                        <span>序号</span>
+                                    </td>
+                                    <td>
+                                        <span>文件名</span>
+                                    </td>
+                                    <td align='center'>
+                                        <span>操作</span>
+                                    </td>
+                                </tr>
+                                <tr th:each="file,fileStat:${files}">
+                                    <td>
+                                        <span th:text="${fileStat.count}"></span>
+                                    </td>
+                                    <td>
+                                        <span th:text="${file.filename}"></span>
+                                    </td>
+                                    <td align='center'>
+                                        <a class="layui-btn layui-btn-xs download"th:href="@{downloadfile(filename=${file.filename})}">下载</a>
+                                        <a class="layui-btn layui-btn-danger layui-btn-xs delete"
+                                           th:value="${file.filename}">删除</a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/static/layuiadmin/layui/layui.js"></script>
+
+<script>
+    layui.use(['element', 'jquery', 'layer'], function () {
+        var $ = layui.jquery, layer = layui.layer;
+
+        $(".delete").click(function () {
+            var filename = $(this).attr('value');
+            layer.confirm('您确定要删除吗？', {
+                btn: ['Yes', 'No'], //按钮
+                yes: function (index, layero) {
+                    $.ajax({
+                        url: '/deletefile?filename=' + filename,
+                        type: 'GET', //GET
+                        async: true,    //或false,是否异步
+                        timeout: 5000,    //超时时间
+                      //返回的数据格式：json/xml/html/script/jsonp/text
+                        success: function (data) {
+                            if (data.i = 1) {
+                            }
+                        }
+                    });
+                    layer.close(index);
+                }, end: function () {
+                    // $(".layui-laypage-btn").click();//弹出框  关闭后刷新，停留在当前页
+                    location.reload();
+
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>
